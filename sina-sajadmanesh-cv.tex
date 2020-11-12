@@ -1,0 +1,704 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[9pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+\usepackage{fontawesome}
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=a4paper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=0.5in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titlesa
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Sina Sajadmanesh}
+
+\section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+%\newlength{\rcollength}\setlength{\rcollength}{0in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+%\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+{Rue Marconi 19 \hfill (+41) 27-721-77-58~\faPhone\\
+1920 Martigny \hfill{\href{mailto:sina.sajadmanesh@idiap.ch}{sina.sajadmanesh@idiap.ch}~\faEnvelope} \\ 
+Switzerland \hfill{\href{https://www.idiap.ch/~sajadmanesh}{https://www.idiap.ch/\string~sajadmanesh}~\faHome}}
+
+%\hfill{GitHub: \href{http://www.github.com/pauljwright}{www.github.com/pauljwright}} }
+
+
+%\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+\section{Research Summary}
+
+My research interests lie at the intersection of privacy, deep learning, and graph analysis. More specifically, I use privacy enhancing technologies, such as differential privacy and federated learning, with graph representation learning algorithms, including graph neural networks, to make them more private, secure, and robust for real-world applications.
+
+
+%%%% EDUCATION %%%%
+\section{Education}
+
+\href{https://www.epfl.ch/en/home/}{\textbf{École Polytechnique Fédérale de Lausanne (EPFL)}}, Lausanne, Switzerland \hfill {May 2019 -- May 2023}
+\begin{innerlist}
+\item[] Ph.D. in Electrical Engineering \quad GPA: 5.75 / 6
+        \begin{innerlist}
+        \item[] \textbf{Thesis Topic:} \emph{Learning over Graphs: From Social to Privacy-Preserving Methods}
+        \item[] \textbf{Adviser:} Prof.~Daniel Gatica-Perez
+        \item[] \textbf{Relevant Courses:} Artificial Neural Networks (Deep Reinforcement Learning), Deep Learning for Natural Language Processing
+        \end{innerlist}
+
+\end{innerlist}
+
+\halfblankline
+
+\href{http://www.en.sharif.edu/}{\textbf{Sharif University of Technology}}, Tehran, Iran \hfill {Sep 2014 -- Sep 2016}
+\begin{innerlist}
+	\item[] M.Sc. in Information Technology Engineering \quad  GPA: 18.1 / 20
+	\begin{innerlist}
+		\item[] \textbf{Thesis Topic:} \emph{Link Prediction in Heterogeneous Multi-Layer Social Networks}
+		\item[] \textbf{Adviser:} Prof.~Hamid R. Rabiee
+		\item[] \textbf{Relevant Courses:} Machine Learning, Complex Dynamical Networks, Performance Modeling of Computer Systems, Advanced Network Security, Database Security and Privacy
+	\end{innerlist}
+	
+\end{innerlist}
+
+\halfblankline
+
+\href{http://ui.ac.ir/EN}{\textbf{University of Isfahan}}, Esfahan, Iran \hfill {Sep 2009 -- Feb 2014}
+\begin{innerlist}
+	\item[] B.Sc. in Computer Software Engineering \quad  GPA: 16.19 / 20 (Last four semesters: 17.4 / 20)
+	\begin{innerlist}
+		\item[] \textbf{Project:} \emph{Design and Implementation of an Android App for Voice Control of Household Devices}
+		\item[] \textbf{Adviser:} Prof.~Ahamd R. Naghsh-Nilchi
+		\item[] \textbf{Relevant Courses:} Data Structures, Algorithms, Probability and Statistics, Artificial Intelligence, Information Retrieval, Software Engineering, Databases, Operating Systems, Computer Networks
+	\end{innerlist}
+	
+\end{innerlist}
+
+\section{Research Experience}
+
+
+\textbf{Research Assistant} \hfill {May 2019 -- present}
+\begin{innerlist}
+    \item[] \href{https://www.idiap.ch/en/scientific-research/social-computing/index_html}{Social Computing Group}, \textbf{\href{https://idiap.ch}{Idiap Research Institute}}, Martigny, Switzerland
+    \begin{innerlist}
+    	\item Developing privacy-preserving graph neural network models using differential privacy to reduce the privacy risks of using graph representation learning algorithms in real applications.
+    \end{innerlist}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Research Assistant} \hfill {Nov 2014 -- May 2019}
+\begin{innerlist}
+	\item[] \href{http://dml.ce.sharif.edu/}{Data Science and Machine Learning Lab}, \href{http://www.en.sharif.edu/}{\textbf{Sharif University of Technology}}, Tehran, Iran
+	\begin{innerlist}
+		\item Private Deep Learning: Worked on a hybrid approach based on Siamese fine-tuning and split learning to make non-private pre-trained deep learning models privacy-preserving at the inference stage.
+		\item Food and Cuisines: Analyzed a large-scale collection of recipes published on the web and their content, aiming to understand cuisines
+		and culinary habits around the world.
+		\item Social Media Mining: Developed time-aware link prediction algorithms over heterogeneous social networks using recurrent neural networks and non-parametric machine learning.
+	\end{innerlist}
+\end{innerlist}
+
+\section{Teaching Experience}
+
+\textbf{Guest Lecturer} \hfill {Fall 2017}
+\begin{innerlist}
+	\item[] \href{http://ce.sharif.edu/}{Department of Computer Engineering}, \href{http://www.en.sharif.edu/}{\textbf{Sharif University of Technology}}, Tehran, Iran
+	\begin{innerlist}
+		\item[] \textbf{Course:} Fundamentals of Programming (Python)
+		\item[] \textbf{Website:} \href{http://ce.sharif.edu/courses/96-97/1/ce153-12/}{http://ce.sharif.edu/courses/96-97/1/ce153-12/}
+	\end{innerlist}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Teaching Assistant}
+\begin{innerlist}
+	\item[] \href{http://ce.sharif.edu/}{Department of Computer Engineering}, \href{http://www.en.sharif.edu/}{\textbf{Sharif University of Technology}}, Tehran, Iran
+	\begin{innerlist}
+		\item Artificial Intelligence (Head TA) \hfill Spring 2017
+		\item Advanced Topics in Artificial Intelligence - Statistical Learning Theory \hfill Spring 2016
+		\item Engineering Probability and Statistics \hfill Spring 2016
+	\end{innerlist}
+%	\halfblankline
+	\item[] \href{https://comp.ui.ac.ir/en}{Faculty of Computer Engineering}, \href{http://ui.ac.ir/EN}{\textbf{University of Isfahan}}, Esfahan, Iran
+	\begin{innerlist}
+		\item Artificial Intelligence \hfill Fall 2013
+		\item Advanced Computer Programming 2 - JavaFx and Android \hfill Fall 2012
+		\item Computer Programming - Java \hfill Fall 2011
+		\item Computer Programming - C++ \hfill Fall 2010
+	\end{innerlist}
+\end{innerlist}
+
+\newpage
+\makeheading{Sina Sajadmanesh} 
+
+\section{Industrial Experience}
+
+\textbf{Big-Data Engineer} \hfill {Sep 2018 -- May 2019}
+\begin{innerlist}
+	\item[] \href{http://ictic.sharif.ir}{Sharif ICT Innovation Center}, Tehran, Iran
+	\begin{innerlist}
+		\item Responsible for building a native big-data processing platform using state of the art technologies, such as Spark, Cassandra, JanusGraph, Elasticsearch, etc.
+	\end{innerlist}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Software Engineer Intern} \hfill {Summer 2012}
+\begin{innerlist}
+	\item[] Amin Computer Co., Esfahan, Iran
+	\begin{innerlist}
+		\item Responsible for designing and developing an Android application for company's web-based human resource management system.
+	\end{innerlist}
+\end{innerlist}
+
+ 
+%
+% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+% % down to make room for tall ``Submitted Journal Publications''
+% % marginpar. If there are enough submitted journal publications, this
+% % space will not be needed (and should be removed).
+% \vspace{0.1in}
+
+\section{Publications}
+
+\begin{bibenum}
+	\item{} \textbf{Sina Sajadmanesh} and Daniel Gatica-Perez \hfill  Oct 2020\\
+	\href{https://arxiv.org/abs/2006.05535}{\textbf{Locally Private Graph Neural Networks}}\\
+	\textit{Technical Report, ArXiv e-prints}
+	
+	\item{} Seyed Ali Osia, Ali Shahin Shamsabadi, \textbf{Sina Sajadmanesh}, \textit{et al} \hfill May 2020\\
+	\href{https://arxiv.org/abs/1703.02952}{\textbf{A Hybrid Deep Learning Architecture for Privacy-Preserving Mobile Analytics}}\\
+	\textit{IEEE Internet of Things Journal}
+	
+	\item{} \textbf{Sina Sajadmanesh}, Sogol Bazargani, Jiawei Zhang, and Hamid R. Rabiee \hfill Aug 2019\\
+	\href{https://arxiv.org/abs/1710.00818}{\textbf{Continuous-Time Relationship Prediction in Dynamic Heterogeneous Information Networks}}\\
+	\textit{ACM Transactions on Knowledge Discovery from Data}
+	
+	\item{} \textbf{Sina Sajadmanesh}, Jiawei Zhang, and Hamid R. Rabiee \hfill Jun 2017\\
+	\href{https://arxiv.org/abs/1706.06783}{\textbf{NPGLM: A Non-Parametric Method for Temporal Link Prediction}}\\
+	\textit{Technical Report, ArXiv e-prints}
+	
+	\item{} \textbf{Sina Sajadmanesh}, Sina Jafarzadeh, Seyed Ali Ossia, \textit{et al} \hfill Apr 2017\\
+	\href{https://arxiv.org/pdf/1610.08469}{\textbf{Kissing Cuisines: Exploring Worldwide Culinary Habits on the Web}}\\
+	International World Wide Web Conference (WWW 2017) Companion
+	
+	\item{} \textbf{Sina Sajadmanesh}, Hamid R. Rabiee and Ali Khodadadi \hfill  Aug 2016\\
+	\href{https://arxiv.org/pdf/1607.08821}{\textbf{Predicting Anchor Links between Heterogeneous Social Networks}}\\
+	\textit{IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining}
+	
+\end{bibenum}
+
+
+\section{Honors and Awards}
+\begin{innerlist}
+\item
+\textbf{PhD admission}
+{with fully-funded research assistantship to the Computer Science program from the University of Illinois at Urbana-Champaign.}, 
+{2018}
+
+\item
+\textbf{PhD admission}
+{with fully-funded postgraduate studentship to the Computer Science and Engineering program from Hong-Kong University of Science and Technology.},
+{2017}
+
+\item
+\textbf{Ranked 3rd}
+{in cumulative GPA among B.Sc. Computer Software Engineering students admitted for Fall 2009, University of Isfahan
+},
+{2014}
+
+\item
+\textbf{Ranked 6th}
+{in Iranian nationwide university entrance exam for graduate studies, field
+	of Artificial Intelligence, among more than 100000 students},
+{2014}
+
+\item
+\textbf{Ranked 15th}
+{in Iranian nationwide university entrance exam for graduate studies, field
+	of Computer Networks and Security, among more than 30000 students},
+{2014}
+
+\item
+\textbf{Ranked 28th}
+{in 18th National Computer Olympiad for University Students at Tarbiat Modares University}
+, {Tehran, Iran}, 
+{2013}
+
+\item
+\textbf{Ranked 16th}
+{in ACM-ICPC regional contest, Asia region, Tehran site, among more than 70 teams at University of Tehran}
+, {Tehran, Iran},
+{2011}
+
+\item
+\textbf{Ranked 2nd}
+{in nationwide collegiate programming contest among more than 70 teams at University of Kashan}
+, {Kashan, Iran},
+{2010}
+
+\item
+\textbf{Ranked among top 0.02\%}
+{in Iran's nationwide university entrance exam for undergraduate studies.},
+{2009}
+\end{innerlist}
+
+
+\section{Memberships}
+     \textbf{ACM-ICPC Student Chapter}, \href{http://ui.ac.ir/EN}{{University of Isfahan}}, Esfahan, Iran \hfill {2010 -- 2012}
+    \begin{innerlist}
+     \item Organized weekly programming contests.
+     \item Instructed data structures and algorithms to freshmen.
+    \end{innerlist}
+    
+\section{Community Service}
+
+\textbf{Journal Reviewer}
+\begin{innerlist}
+	\item[] \href{https://www.springer.com/journal/11280}{World Wide Web} (2018)
+	\item[] \href{https://www.springer.com/journal/13278}{Social Network Analysis and Mining} (2020)
+	\item[] \href{https://dl.acm.org/journal/tist}{ACM Transactions on Intelligent Systems and Technology} (2020)
+\end{innerlist}
+
+\newpage
+\makeheading{Sina Sajadmanesh} 
+
+\section{Media Coverage}
+\begin{innerlist}
+	\item {\href{https://www.technologyreview.com/s/602790/how-data-mining-reveals-the-worlds-healthiest-cuisines/}{How Data Mining Reveals the World’s Healthiest Cuisines}}, \textbf{MIT Technology Review}, {3 Nov 2016}
+	
+	\item {\href{https://www.indy100.com/article/healthy-diverse-top-healthiest-countries-cuisine-food-in-the-world-list-7412171}{These are the world's most diverse cuisines}}, \textbf
+	{The Independent}, {11 Nov 2016}
+	
+	\item {\href{https://www.france24.com/fr/20161115-algorithme-compare-cuisines-monde-matiere-dingredients-dapports-nutritionnels}{Un algorithme compare les cuisines du monde en matière d'ingrédients et d'apports nutritionnels}}, \textbf
+	{France 24}, {15 Nov 2016}
+	
+	\item {\href{https://reachmd.com/news/if-you-are-what-you-eat-regional-cuisines-have-a-major-impact-on-health/1306703/}{If you are what you eat: regional cuisines have a major impact on health}}, \textbf
+	{ReachMD}, {4 Nov 2016}
+	
+	\item {\href{https://www.sciencesetavenir.fr/high-tech/data/diversite-nutrition-les-cuisines-du-monde-analysees-par-les-big-data_108012}{Les cuisines du monde passées au crible des big data}}, \textbf
+	{Sciences et Avenir}, {14 Nov 2016}
+\end{innerlist}
+
+
+\section{Technical Skills} 
+
+\textit
+{Programming:}\\
+{Python, Java, C, C++, MATLAB, PHP, Javascript}
+
+\halfblankline
+
+\textit
+{Information Retrieval \& Analytics:}\\
+{Elasticsearch, JanusGraph, Cassandra}
+
+\halfblankline
+
+\textit
+{Data Science and Machine Learning:}\\
+{PyTorch, PyTorch-Geometric, PyTorch-Lightning, Scikit-Learn, Pandas}
+
+
+
+\section{References}
+\textbf{Prof. Daniel Gatica-Perez}
+\begin{innerlist}
+\item[] Idiap Research Institute, EPFL
+\item[] Website: \href{https://idiap.ch/~gatica}{https://idiap.ch/\string~gatica}
+\item[] Email: \href{mailto:daniel.gatica-perez@epfl.ch}{daniel.gatica-perez@epfl.ch}
+\end{innerlist}    
+
+\halfblankline
+
+\textbf{Prof. Hamid R. Rabiee}
+\begin{innerlist}
+	\item[] Sharif University of Technology
+	\item[] Website: \href{http://sharif.ir/~rabiee}{http://sharif.ir/\string~rabiee}
+	\item[] Email: \href{mailto:rabiee@sharif.edu}{rabiee@sharif.edu}
+\end{innerlist}   
+
+\halfblankline
+
+\textbf{Prof. Emiliano De Cristofaro}
+\begin{innerlist}
+	\item[] University College London
+	\item[] Website: \href{https://emilianodc.com/}{https://emilianodc.com/}
+	\item[] Email: \href{mailto:e.decristofaro@ucl.ac.uk}{e.decristofaro@ucl.ac.uk}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Prof. Hamed Haddadi}
+\begin{innerlist}
+	\item[] Imperial College London
+	\item[] Website: \href{https://haddadi.github.io/}{https://haddadi.github.io/}
+	\item[] Email: \href{mailto:h.haddadi@imperial.ac.uk}{h.haddadi@imperial.ac.uk}
+\end{innerlist} 
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
