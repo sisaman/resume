@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Don't like 10pt? Try 11pt or 12pt
-\documentclass[9pt]{article}
+\documentclass[8pt]{article}
 \RequirePackage[T1]{fontenc}
 
 % LaTeX will typeset using Computer Modern Roman, which a lot of
@@ -75,7 +75,9 @@
             marginparwidth=1in,     % Length of section titles
             marginparsep=.05in,       % Space between titles and text
             margin=0.5in,               % 1 inch margins
-            includemp]{geometry}
+            top=1in,
+            includemp
+            ]{geometry}
 
 %% Use these lines for A4-sized paper
 %\usepackage[paper=a4paper,
@@ -90,6 +92,10 @@
 
 % Provides special list environments and macros to create new ones
 \usepackage[shortlabels]{enumitem}
+
+\usepackage[nodayofweek]{datetime}
+\newdateformat{mydate}{\twodigit{\THEDAY}{ }\shortmonthname[\THEMONTH], \THEYEAR}
+
 
 % Simpler bibsections for CV sections
 % (thanks to natbib for inspiration)
@@ -125,9 +131,10 @@
         topsep=0pt}
 \newlist{bibenum}{enumerate}{3}
 \setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
-        itemindent=-\bibhang,
-        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
-        topsep=0pt}
+%        itemindent=-\bibhang,
+%        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt
+      }
 \let\oldendbibenum\endbibenum
 \def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
 \let\oldendbibsection\endbibsection
@@ -143,19 +150,35 @@
 %       numbers (make sure includefoot is commented out above)
 %
 \usepackage{fancyhdr,lastpage}
+
+\newlength{\myoddoffset}
+\setlength{\myoddoffset}{\marginparwidth + \marginparsep}
+
 \pagestyle{fancy}
 %\pagestyle{empty}      % Uncomment this to get rid of page numbers
-\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+
+\fancyheadoffset[leh,roh]{\marginparsep}
+\fancyheadoffset[loh,reh]{\myoddoffset}
+
+\fancyhf{}\renewcommand{\headrulewidth}{1pt}
+\fancyhead[L]{\large\textbf{Sina Sajadmanesh}}
+
 \fancyfootoffset{\marginparsep+\marginparwidth}
 \newlength{\footpageshift}
 \setlength{\footpageshift}
           {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
-\lfoot{\hspace{\footpageshift}%
-       \parbox{4in}{\, \hfill %
-                    \arabic{page} of \protect\pageref*{LastPage} % +LP
-%                    \arabic{page}                               % -LP
-                    \hfill \,}}
+ 
+\fancyfoot[C]{}         
+\fancyfoot[L]{
+	\hspace{\footpageshift}%
+	\parbox{4in}{\, \hfill %
+		\arabic{page} of \protect\pageref*{LastPage} % +LP
+		\hfill \,}
+}
 
+\fancyhead[R]{
+	Last update: \mydate\today
+}
 % Finally, give us PDF bookmarks
 \usepackage{color,hyperref}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.3}
@@ -319,7 +342,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\makeheading{Sina Sajadmanesh}
+%\makeheading{Sina Sajadmanesh}
 
 \section{Contact Information}
 
@@ -339,8 +362,8 @@
 %\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
 
 {Rue Marconi 19 \hfill (+41) 27-721-77-58~\faPhone\\
-1920 Martigny \hfill{\href{mailto:sina.sajadmanesh@idiap.ch}{sina.sajadmanesh@idiap.ch}~\faEnvelope} \\ 
-Switzerland \hfill{\href{https://www.idiap.ch/~sajadmanesh}{https://www.idiap.ch/\string~sajadmanesh}~\faHome}}
+1920 Martigny \hfill{\href{mailto:sajadmanesh@idiap.ch}{sajadmanesh@idiap.ch}~\faEnvelope} \\ 
+Switzerland \hfill{\href{https://idiap.ch/~sajadmanesh}{https://idiap.ch/\string~sajadmanesh}~\faHome}}
 
 %\hfill{GitHub: \href{http://www.github.com/pauljwright}{www.github.com/pauljwright}} }
 
@@ -425,6 +448,13 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 
 \halfblankline
 
+\textbf{Research Assistant}, {(Offered, but declined due to visa problems)}
+\begin{innerlist}
+	\item[] \href{https://www.c3sr.com/}{IBM-ILLINOIS Center for Cognitive Computing Systems Research}, \textbf{\href{https://illinois.edu/}{University of Illinois at Urbana-Champaign}}, Champaign, Illinois, United States
+\end{innerlist}
+
+\halfblankline
+
 \textbf{Research Assistant}, {Nov 2014 -- May 2019}
 \begin{innerlist}
 	\item[] \href{http://dml.ce.sharif.edu/}{Data Science and Machine Learning Lab}, \href{http://www.en.sharif.edu/}{\textbf{Sharif University of Technology}}, Tehran, Iran
@@ -467,8 +497,8 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 	\end{innerlist}
 \end{innerlist}
 
-\newpage
-\makeheading{Sina Sajadmanesh} 
+%\newpage
+%\makeheading{Sina Sajadmanesh} 
 
 \section{Industrial Experience}
 
@@ -480,9 +510,10 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 	\end{innerlist}
 \end{innerlist}
 
+
 \halfblankline
 
-\textbf{Software Engineer Intern}, {Summer 2012}
+\textbf{Software Engineering Intern}, {Summer 2012}
 \begin{innerlist}
 	\item[] Amin Computer Co., Esfahan, Iran
 	\begin{innerlist}
@@ -504,8 +535,8 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 	\item{} \textbf{Sina Sajadmanesh} and Daniel Gatica-Perez\\
 	\href{https://arxiv.org/abs/2006.05535}{\textbf{Locally Private Graph Neural Networks}}\\
 	\textit{Technical Report, ArXiv e-prints}, Oct 2020
-	
-	\item{} Seyed Ali Osia, Ali Shahin Shamsabadi, \textbf{Sina Sajadmanesh}, \textit{et al}\\
+
+	\item{} Seyed Ali Osia, Ali Shahin Shamsabadi, \textbf{Sina Sajadmanesh}, \textit{et al.}\\
 	\href{https://arxiv.org/abs/1703.02952}{\textbf{A Hybrid Deep Learning Architecture for Privacy-Preserving Mobile Analytics}}\\
 	\textit{IEEE Internet of Things Journal}, May 2020
 	
@@ -517,7 +548,7 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 	\href{https://arxiv.org/abs/1706.06783}{\textbf{NPGLM: A Non-Parametric Method for Temporal Link Prediction}}\\
 	\textit{Technical Report, ArXiv e-prints}, Jun 2017
 	
-	\item{} \textbf{Sina Sajadmanesh}, Sina Jafarzadeh, Seyed Ali Ossia, \textit{et al}\\
+	\item{} \textbf{Sina Sajadmanesh}, Sina Jafarzadeh, Seyed Ali Ossia, \textit{et al.}\\
 	\href{https://arxiv.org/pdf/1610.08469}{\textbf{Kissing Cuisines: Exploring Worldwide Culinary Habits on the Web}}\\
 	International World Wide Web Conference (WWW 2017) Companion, Apr 2017
 	
@@ -528,17 +559,53 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 \end{bibenum}
 
 
-\section{Honors and Awards}
+\section{Media Coverage}
+\begin{innerlist}
+	\item {\href{https://www.technologyreview.com/s/602790/how-data-mining-reveals-the-worlds-healthiest-cuisines/}{How Data Mining Reveals the World’s Healthiest Cuisines}}, \textbf{MIT Technology Review}, {3 Nov 2016}
+	
+	\item {\href{https://www.indy100.com/article/healthy-diverse-top-healthiest-countries-cuisine-food-in-the-world-list-7412171}{These are the world's most diverse cuisines}}, \textbf
+	{The Independent}, {11 Nov 2016}
+	
+	\item {\href{https://www.france24.com/fr/20161115-algorithme-compare-cuisines-monde-matiere-dingredients-dapports-nutritionnels}{Un algorithme compare les cuisines du monde en matière d'ingrédients et d'apports nutritionnels}}, \textbf
+	{France 24}, {15 Nov 2016}
+	
+	\item {\href{https://reachmd.com/news/if-you-are-what-you-eat-regional-cuisines-have-a-major-impact-on-health/1306703/}{If you are what you eat: regional cuisines have a major impact on health}}, \textbf
+	{ReachMD}, {4 Nov 2016}
+	
+	\item {\href{https://www.sciencesetavenir.fr/high-tech/data/diversite-nutrition-les-cuisines-du-monde-analysees-par-les-big-data_108012}{Les cuisines du monde passées au crible des big data}}, \textbf
+	{Sciences et Avenir}, {14 Nov 2016}
+\end{innerlist}
+
+
+\section{Community Service}
+
+\textbf{Journal Reviewer}
+\begin{innerlist}
+	\item[] \href{https://www.springer.com/journal/11280}{World Wide Web} (2018)
+	\item[] \href{https://www.springer.com/journal/13278}{Social Network Analysis and Mining} (2020)
+	\item[] \href{https://dl.acm.org/journal/tist}{ACM Transactions on Intelligent Systems and Technology} (2020)
+\end{innerlist}
+
+
+\section{Invited\\Talks}
+
+\textbf{Privacy-Preserving Deep Learning Over Graphs}, {Dec 2020}
+\begin{innerlist}
+	\item[] \href{https://www.imperial.ac.uk/information-processing-and-communications-lab}{Information Processing and Communications Lab}, \href{https://www.imperial.ac.uk}{\textbf{Imperial College London}}, UK
+\end{innerlist}
+
+
+\section{Honors\\and Awards}
 \begin{innerlist}
 \item
-\textbf{PhD admission}
-{with fully-funded research assistantship to the Computer Science program from the University of Illinois at Urbana-Champaign.}, 
-{2018}
+\textbf{PhD admission}, 
+{Computer Science, University of Illinois at Urbana-Champaign}, 
+{2018} (declined)
 
 \item
 \textbf{PhD admission}
-{with fully-funded postgraduate studentship to the Computer Science and Engineering program from Hong-Kong University of Science and Technology.},
-{2017}
+{Computer Science, Hong-Kong University of Science and Technology},
+{2017} (declined)
 
 \item
 \textbf{Ranked 3rd}
@@ -584,40 +651,18 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 
 
 \section{Memberships}
-     \textbf{ACM-ICPC Student Chapter}, \href{http://ui.ac.ir/EN}{{University of Isfahan}}, Esfahan, Iran, {2010 -- 2012}
-    \begin{innerlist}
-     \item Organized weekly programming contests.
-     \item Instructed data structures and algorithms to freshmen.
-    \end{innerlist}
+
+{ACM Professional Member}, 2020
+
+{ACM Student Member}, 2011 -- 2014
+
+{ACM-ICPC Student Chapter}, \href{http://ui.ac.ir/EN}{{University of Isfahan}}, Esfahan, Iran, {2010 -- 2012}
+
     
-\section{Community Service}
 
-\textbf{Journal Reviewer}
-\begin{innerlist}
-	\item[] \href{https://www.springer.com/journal/11280}{World Wide Web} (2018)
-	\item[] \href{https://www.springer.com/journal/13278}{Social Network Analysis and Mining} (2020)
-	\item[] \href{https://dl.acm.org/journal/tist}{ACM Transactions on Intelligent Systems and Technology} (2020)
-\end{innerlist}
 
-\newpage
-\makeheading{Sina Sajadmanesh} 
-
-\section{Media Coverage}
-\begin{innerlist}
-	\item {\href{https://www.technologyreview.com/s/602790/how-data-mining-reveals-the-worlds-healthiest-cuisines/}{How Data Mining Reveals the World’s Healthiest Cuisines}}, \textbf{MIT Technology Review}, {3 Nov 2016}
-	
-	\item {\href{https://www.indy100.com/article/healthy-diverse-top-healthiest-countries-cuisine-food-in-the-world-list-7412171}{These are the world's most diverse cuisines}}, \textbf
-	{The Independent}, {11 Nov 2016}
-	
-	\item {\href{https://www.france24.com/fr/20161115-algorithme-compare-cuisines-monde-matiere-dingredients-dapports-nutritionnels}{Un algorithme compare les cuisines du monde en matière d'ingrédients et d'apports nutritionnels}}, \textbf
-	{France 24}, {15 Nov 2016}
-	
-	\item {\href{https://reachmd.com/news/if-you-are-what-you-eat-regional-cuisines-have-a-major-impact-on-health/1306703/}{If you are what you eat: regional cuisines have a major impact on health}}, \textbf
-	{ReachMD}, {4 Nov 2016}
-	
-	\item {\href{https://www.sciencesetavenir.fr/high-tech/data/diversite-nutrition-les-cuisines-du-monde-analysees-par-les-big-data_108012}{Les cuisines du monde passées au crible des big data}}, \textbf
-	{Sciences et Avenir}, {14 Nov 2016}
-\end{innerlist}
+%\newpage
+%\makeheading{Sina Sajadmanesh} 
 
 
 \section{Technical Skills} 
@@ -641,39 +686,36 @@ My research interests lie at the intersection of privacy, deep learning, and gra
 
 
 \section{References}
-\textbf{Prof. Daniel Gatica-Perez}
+\textbf{Prof. Daniel Gatica-Perez}, Idiap Research Institute, EPFL
 \begin{innerlist}
-\item[] Idiap Research Institute, EPFL
 \item[] Website: \href{https://idiap.ch/~gatica}{https://idiap.ch/\string~gatica}
 \item[] Email: \href{mailto:daniel.gatica-perez@epfl.ch}{daniel.gatica-perez@epfl.ch}
 \end{innerlist}    
 
 \halfblankline
 
-\textbf{Prof. Hamid R. Rabiee}
+\textbf{Prof. Hamid R. Rabiee}, Department of Computer Engineering, Sharif University of Technology
 \begin{innerlist}
-	\item[] Sharif University of Technology
 	\item[] Website: \href{http://sharif.ir/~rabiee}{http://sharif.ir/\string~rabiee}
 	\item[] Email: \href{mailto:rabiee@sharif.edu}{rabiee@sharif.edu}
 \end{innerlist}   
 
 \halfblankline
 
-\textbf{Prof. Emiliano De Cristofaro}
+\textbf{Prof. Hamed Haddadi}, Dyson School of Design Engineering, Imperial College London
 \begin{innerlist}
-	\item[] University College London
+	\item[] Website: \href{https://haddadi.github.io/}{https://haddadi.github.io/}
+	\item[] Email: \href{mailto:h.haddadi@imperial.ac.uk}{h.haddadi@imperial.ac.uk}
+\end{innerlist} 
+
+\halfblankline
+
+\textbf{Prof. Emiliano De Cristofaro}, Department of Computer Science, University College London
+\begin{innerlist}
 	\item[] Website: \href{https://emilianodc.com/}{https://emilianodc.com/}
 	\item[] Email: \href{mailto:e.decristofaro@ucl.ac.uk}{e.decristofaro@ucl.ac.uk}
 \end{innerlist}
 
-\halfblankline
-
-\textbf{Prof. Hamed Haddadi}
-\begin{innerlist}
-	\item[] Imperial College London
-	\item[] Website: \href{https://haddadi.github.io/}{https://haddadi.github.io/}
-	\item[] Email: \href{mailto:h.haddadi@imperial.ac.uk}{h.haddadi@imperial.ac.uk}
-\end{innerlist} 
 
 \end{document}
 
