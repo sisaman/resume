@@ -9,6 +9,8 @@
 \usepackage{fontawesome}
 \usepackage[shortlabels]{enumitem}
 \usepackage{color,hyperref}
+\usepackage{tabularray}
+\usepackage{graphicx}
 % The automated optical recognition software used to digitize resume
 % information works best with fonts that do not have serifs. This
 % command uses a sans serif font throughout. Uncomment both lines (or at
@@ -70,25 +72,29 @@
 \def \website#1{\def\@website{#1}}
 \def \@website {}
 
-\renewcommand{\maketitle}{
-  \begingroup % Begin a group to localize settings
-  \hfil % Create horizontal fill to center the content
-  {\LARGE\bf\@name} % Set the name size, bold, and italic style
-  \hfil % Create horizontal fill to center the content
-  \endgroup % End the group to revert localized 
-  \par
-  \medskip
+\def \linkedin#1{\def\@linkedin{#1}}
+\def \@linkedin {}
 
-  \begingroup % Begin a group to localize settings
-  \hfil % Create horizontal fill to center the content
-  \begin{tabular}{cccc}
-    \faHome~\href{\@website}{\@website}                  &
-    \faEnvelope~\href{mailto:\@email}{\@email} &
-    \faPhone~\@phone                                                      &
-    \faLocationArrow~\@location                                             \\
-  \end{tabular}
-  \hfil % Create horizontal fill to center the content
-  \endgroup % End the group to revert localized 
-  \par
+\renewcommand{\maketitle}{
+
+  \begin{tblr}{lX[r]}
+    {\Huge\bf\@name} & \SetCell[r=5]{r} \includegraphics[width=0.18\textwidth]{sina-sajadmanesh-photo.png} \\
+    \faLinkedinSquare~~~\href{https://www.linkedin.com/in/\@linkedin}{linkedin.com/in/\@linkedin} & \\ 
+    \faEnvelope~~~\href{mailto:\@email}{\@email} & \\
+    \faPhone~~~\@phone & \\
+    \faLocationArrow~~~\@location & \\
+  \end{tblr}
+
+  % \begin{wrapfigure}[4]{r}{0.2\textwidth}
+  %   \vspace{-0.5cm}
+  %   \includegraphics[width=0.17\textwidth]{sina-sajadmanesh-photo.jpg}
+  % \end{wrapfigure}
+  % {\Huge\bf\@name} % Set the name size, bold, and italic style
+  % \medskip
+
+  %   \faLinkedinSquare~~~\href{https://www.linkedin.com/in/\@linkedin}{linkedin.com/in/\@linkedin}\\
+  %   \faEnvelope~~~\href{mailto:\@email}{\@email}\\
+  %   \faPhone~~~\@phone \\
+  %   \faLocationArrow~~~\@location    \\
   \medskip
 }
