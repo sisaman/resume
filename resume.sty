@@ -12,6 +12,8 @@
 \usepackage{tabularray}
 \usepackage{graphicx}
 \usepackage{etoolbox}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amssymb}
 % The automated optical recognition software used to digitize resume
 % information works best with fonts that do not have serifs. This
 % command uses a sans serif font throughout. Uncomment both lines (or at
@@ -33,9 +35,10 @@
 
 \setlength{\parindent}{0in} % Get rid of indenting throughout entire document
 \definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\definecolor{islamicgreen}{rgb}{0.0, 0.56, 0.0}
 \hypersetup{colorlinks,breaklinks,
-            linkcolor=darkblue,urlcolor=darkblue,
-            anchorcolor=darkblue,citecolor=darkblue}
+            linkcolor=NavyBlue,urlcolor=NavyBlue,
+            anchorcolor=NavyBlue,citecolor=NavyBlue}
 %%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%% SECTION HEADINGS
@@ -45,7 +48,7 @@
 % Usage: \section{section name}
 \renewcommand{\section}[1]{
 	\medskip % Space before section
-    \textsc{\large \textcolor{Blue}{#1}} % Navy blue, bold, italic section title
+    \textsc{\large\bfseries \textcolor{Blue}{#1}} % Navy blue, bold, italic section title
     \medskip % Space before horizontal line
     {\hrule}
 	% \medskip
@@ -56,7 +59,7 @@
     \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=3pt,topsep=0pt,partopsep=0pt}
 
 \newlist{outerlist}{itemize}{3}
-	\setlist[outerlist]{leftmargin=0pt, label={}}
+	\setlist[outerlist]{leftmargin=12pt, label={\tiny$\blacksquare$}}
 
 
 \def \name#1{\def\@name{#1}}
@@ -99,8 +102,10 @@
   \medskip
 }
 
-\newcommand{\position}[4]{
-  \vspace*{-0.5em}
-  \subsection*{\normalfont\normalsize #1\\\textbf{#2}, #3, \hfill #4}
-  \vspace*{-0.5em}
+\newcommand{\position}[5]{
+  % \vspace*{-0.5em}
+  \item #1\\\textbf{#2}, #3 \hfill #4
+  % \vspace*{-0.5em}
+
+  #5
 }
